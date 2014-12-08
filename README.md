@@ -1,6 +1,6 @@
 UPS-system
 ==========
-/*--------------------------------------------------------------
+
   Program:      eth_websrv_SD_Ajax_gauge Voltmeter, Batt Amp, Charger Amp & Inverter Amp 
 
   Description:  Arduino web server web page displays Arduino
