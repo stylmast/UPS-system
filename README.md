@@ -168,12 +168,12 @@ void XML_response(EthernetClient cl)
     int inputPin1 = A1;              // Analog input pin Battery value
     int inputPin2 = A2;              // Analog input pin Charger value    
     int inputPin3 = A3;              // Analog input pin Inverter value
-    //int average1 = 0;                // the average for input Voltage reading
-    //int average2 = 0;                // the average for input Battery reading
-   // int average3 = 0;                // the average for input Charger reading
-   // int average4 = 0;                // the average for input Inverter reading
+    int average1 = 0;                // the average for input Voltage reading
+    int average2 = 0;                // the average for input Battery reading
+    int average3 = 0;                // the average for input Charger reading
+    int average4 = 0;                // the average for input Inverter reading
   
-   // int voltage = 0;
+    int voltage = 0;
     
    dominator = (float)resistor2 / (resistor1 + resistor2);
    for (int thisReading = 0; thisReading < numReadings; thisReading++)
@@ -211,7 +211,7 @@ void XML_response(EthernetClient cl)
     cl.print("</inputs>");
     
    delay(1000);
-/*  
+ 
  total= total - readings[index];   		// subtract the last reading:      
   readings[index] = analogRead(0);      	// read from the sensor:
   total= total + readings[index]; 		// add the reading to the total:   
@@ -251,8 +251,6 @@ total= total - readings[index];   		// subtract the last reading:
   average = total / numReadings;	        // calculate the average:
   Serial.print(average4);  		        // send it to the computer as ASCII digits
   delay(2000);
-  
-*/
  
 double Current1 = currentSensor1(analogRead(inputPin1));  // Read  analog value
   Serial.print("Batt Amps:"); 
@@ -326,13 +324,12 @@ double currentSensor1(int RawADC) {
   double SensedCurrent  = Difference / Sensitivity;
   Serial.print("Charger ");
   Serial.print(RawADC);
-  /*Serial.print("/1024");
+  Serial.print("/1024");
   Serial.print(", S V: ");
   printDouble(SensedVoltage, 1);
   Serial.print("mV");
   Serial.print(", 0A at: ");
   printDouble(ZeroCurrentVcc, 1);
- */
   Serial.print("mV");
   return SensedCurrent;                                        // Return the Current
        
@@ -350,13 +347,12 @@ double currentSensor2(int RawADC) {
   double SensedCurrent  = Difference / Sensitivity;
   Serial.print("Batt Bank ");
   Serial.print(RawADC);
-  /*Serial.print("/1024");
+  Serial.print("/1024");
   Serial.print(", S V: ");
   printDouble(SensedVoltage, 1);
   Serial.print("mV");
   Serial.print(", 0A at: ");
   printDouble(ZeroCurrentVcc, 1);
-  */
   Serial.print("mV,");
   return SensedCurrent;                                        // Return the Current
        
@@ -374,16 +370,15 @@ double currentSensor3(int RawADC) {
   double SensedCurrent  = Difference / Sensitivity;
   Serial.print("Inverter ");
   Serial.print(RawADC);
-  /*Serial.print("/1024");
+  Serial.print("/1024");
   Serial.print(", S V: ");
   printDouble(SensedVoltage, 1);
   rial.print("mV");
   Serial.print(", 0A at: ");
   printDouble(ZeroCurrentVcc, 1);
-  */
   Serial.println("mV,");
   return SensedCurrent;                                        // Return the Current
-*/
+
 }
 // ------------------------------------------------------------------------       
 
@@ -429,7 +424,6 @@ char StrContains(char *str, char *sfind)
 
 GAUGE CODE
 
-<!DOCTYPE html>
 <html>
     <head>
         <title>UPS</title>
