@@ -6,9 +6,9 @@ Solar & wind chargering will be added at a later date.
 
 I'm using arduino Ten from Freetronics to handle all of the data monitoring and some control.
 System voltage is being monitored via a voltage divder with input into A0.
-Battery current monitoring via a Allegro hall effects sensor, 50A Bi directional input A1.
-Charger current monitoring via a Allegro hall effects sensor, 50A Uni directional input A2.
-Inverter current monitoring via Allegro hall effects sensor, 200A Uni directional input A3.
+Battery current monitoring via a Allegro ACS 758 hall effects sensor, 50A Bi directional input A1.
+Charger current monitoring via a Allegro ACS 758 hall effects sensor, 50A Uni directional input A2.
+Inverter current monitoring via Allegro ACS 758 hall effects sensor, 200A Uni directional input A3.
 
 All input to be displayed via Ajax gauges on various devices as req'd.
 
