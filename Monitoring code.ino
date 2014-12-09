@@ -181,19 +181,19 @@ void XML_response(EthernetClient cl)
    
     cl.print("<?xml version = \"1.0\" ?>");
     cl.println("<inputs>");
-    analog_val = analogRead(inputPin0);  // read analog pin A0 UPS voltage
+   // analog_val = analogRead(inputPin0);  // read analog pin A0 UPS voltage
     cl.print("<analog>");
     cl.print(analog_val);
     cl.print("</analog>");
-    analog_val = analogRead(1);  // read analog pin A1 battery current 50 Amp Bi directional
+   // analog_val = analogRead(1);  // read analog pin A1 battery current 50 Amp Bi directional
     cl.print("<analog>");
     cl.print(analog_val2);
     cl.print("</analog>");
-    analog_val = analogRead(2);  // read analog pin charger current 50 amp Uni directional
+  //  analog_val = analogRead(2);  // read analog pin charger current 50 amp Uni directional
     cl.print("<analog>");
     cl.print(analog_val3);
     cl.print("</analog>");
-    analog_val = analogRead(3);  // read analog pin A2 inverter current 200 Amp Uni directional
+   // analog_val = analogRead(3);  // read analog pin A2 inverter current 200 Amp Uni directional
     cl.print("<analog>");
     cl.print(analog_val4);
     cl.print("<analog>");
