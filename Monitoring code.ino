@@ -161,11 +161,7 @@ void XML_response(EthernetClient cl)
     int inputPin1 = A1;              // Analog input pin Battery value
     int inputPin2 = A2;              // Analog input pin Charger value    
     int inputPin3 = A3;              // Analog input pin Inverter value
-    //int average1 = 0;                // the average for input Voltage reading NOT IN US at the moment
-    //int average2 = 0;                // the average for input Battery reading NOT IN US at the moment
-   // int average3 = 0;                // the average for input Charger reading NOT IN US at the moment
-   // int average4 = 0;                // the average for input Inverter reading NOT IN US at the moment
-  
+   
    // int voltage = 0;
     
    dominator = (float)resistor2 / (resistor1 + resistor2);
@@ -204,49 +200,7 @@ void XML_response(EthernetClient cl)
     cl.print("</inputs>");
     
    delay(1000);
-/*  /// NOT IN USE at the moment
- total= total - readings[index];   		// subtract the last reading:      
-  readings[index] = analogRead(0);      	// read from the sensor:
-  total= total + readings[index]; 		// add the reading to the total:   
-  index = index + 1;      		        // advance to the next position in the array:   
-  if (index >= numReadings)    		        // if we're at the end of the array..
-  index = 0;                  		        // ...wrap around to the beginning:
-  average = total / numReadings;	        // calculate the average:
-  Serial.print(average1);  		        // send it to the computer as ASCII digits
-  delay(2000); 				        // delay in between reads for stability
 
-total= total - readings[index];   		// subtract the last reading:      
-  readings[index] = analogRead(1);	        // read from the sensor:
-  total= total + readings[index]; 		// add the reading to the total:   
-  index = index + 1;      		        // advance to the next position in the array:   
-  if (index >= numReadings)    		        // if we're at the end of the array..
-  index = 0;                  		        // ...wrap around to the beginning:
-  average = total / numReadings;	        // calculate the average:
-  Serial.print(average2);  		        // send it to the computer as ASCII digits
-  delay(2000);
-  
-total= total - readings[index];   		// subtract the last reading:      
-  readings[index] = analogRead(2);        	// read from the sensor:
-  total= total + readings[index]; 		// add the reading to the total:   
-  index = index + 1;      		        // advance to the next position in the array:   
-  if (index >= numReadings)    		        // if we're at the end of the array..
-  index = 0;                  		        // ...wrap around to the beginning:
-  average = total / numReadings;	        // calculate the average:
-  Serial.print(average3);  		        // send it to the computer as ASCII digits
-  delay(2000);
-
-total= total - readings[index];   		// subtract the last reading:      
-  readings[index] = analogRead(3);        	// read from the sensor:
-  total= total + readings[index]; 		// add the reading to the total:   
-  index = index + 1;      		        // advance to the next position in the array:   
-  if (index >= numReadings)    		        // if we're at the end of the array..
-  index = 0;                  		        // ...wrap around to the beginning:
-  average = total / numReadings;	        // calculate the average:
-  Serial.print(average4);  		        // send it to the computer as ASCII digits
-  delay(2000);
-  
-*/
- 
 double Current1 = currentSensor1(analogRead(inputPin1));  // Read  analog value
   Serial.print("Batt Amps:"); 
   printDouble(Current1, 2);                               // display Current, number of decimal places
@@ -319,7 +273,7 @@ double currentSensor1(int RawADC) {
   double SensedCurrent  = Difference / Sensitivity;
   Serial.print("Charger ");
   Serial.print(RawADC);
-  /*Serial.print("/1024");
+  /*Serial.print("/1024");                                    // Currently not in use
   Serial.print(", S V: ");
   printDouble(SensedVoltage, 1);
   Serial.print("mV");
@@ -343,7 +297,7 @@ double currentSensor2(int RawADC) {
   double SensedCurrent  = Difference / Sensitivity;
   Serial.print("Batt Bank ");
   Serial.print(RawADC);
-  /*Serial.print("/1024");
+  /*Serial.print("/1024");                                     // currently not in use
   Serial.print(", S V: ");
   printDouble(SensedVoltage, 1);
   Serial.print("mV");
@@ -367,7 +321,7 @@ double currentSensor3(int RawADC) {
   double SensedCurrent  = Difference / Sensitivity;
   Serial.print("Inverter ");
   Serial.print(RawADC);
-  /*Serial.print("/1024");
+  /*Serial.print("/1024");                                    // currently not in use
   Serial.print(", S V: ");
   printDouble(SensedVoltage, 1);
   rial.print("mV");
