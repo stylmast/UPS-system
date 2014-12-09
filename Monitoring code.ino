@@ -25,7 +25,7 @@
                 - Gauge from:
                   https://github.com/Mikhus/canv-gauge
 
-
+ Author:        S.A.Elford 8 Dec 2014
 
 #include <SPI.h>
 #include <Ethernet.h>
