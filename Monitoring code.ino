@@ -151,8 +151,8 @@ void XML_response(EthernetClient cl)
     const int voltPin = 0;  
     
     float dominator;
-    int resistor1 = 12000;
-    int resistor2 = 5000;
+    int resistor1 = 12000;          // resistor value multi turn pot
+    int resistor2 = 5000;           // resistor value multi turn pot
     int readings[numReadings];      // the readings from the analog input
     int index = 0;                  // the index of the current reading
     int total = 0;                  // the running total
