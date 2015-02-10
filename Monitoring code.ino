@@ -142,11 +142,11 @@ void loop()
 void XML_response(EthernetClient cl)
 {
     int analog_val = 0;
-    int analog_val1 = 0;      // Define analog input pin value to 0, Voltmeter
-    int analog_val2 = 0;      // Define analog input pin value to 0, Battery current
-    int analog_val3 = 0;      // Define analog input pin value to 0, Chager current
-    int analog_val4 = 0;      // Define analog input pin value to 0, Inverter current
-    char sample;
+    int analog_val0 = 0;      // Define analog input pin value to 0, Voltmeter
+    int analog_val1 = 0;      // Define analog input pin value to 0, Battery current
+    int analog_val2 = 0;      // Define analog input pin value to 0, Chager current
+    int analog_val3 = 0;      // Define analog input pin value to 0, Inverter current
+   
     const int numReadings = 20;
     const int voltPin = 0;  
     
@@ -162,7 +162,9 @@ void XML_response(EthernetClient cl)
     int inputPin2 = A2;              // Analog input pin Charger value    
     int inputPin3 = A3;              // Analog input pin Inverter value
    
-   // int voltage = 0;
+   // --------------------------------------------------------------------------
+   
+   // Voltage divider
     
    dominator = (float)resistor2 / (resistor1 + resistor2);
    for (int thisReading = 0; thisReading < numReadings; thisReading++)
@@ -170,57 +172,83 @@ void XML_response(EthernetClient cl)
    
    float voltage; 
    voltage = analogRead(inputPin0);
+   Serial.print("\t Input A0: ");
+   Serial.print(voltage, 1);
    
    voltage = (voltage / 1024) * 4.86;    // Convert to actual voltage (0 - 5 Vdc)
    voltage = voltage / dominator;
    
-   Serial.print("Volts: ");    // Output to serial
-   Serial.println(voltage, 2);
+   Serial.print("\t Volts: ");    // Output to serial
+   Serial.println(voltage, 1);
    
    delay(1000);
    
+   //  -------------------------------------------------------------------------------------
+   
+    char sample;
+    
+   // get sum of sample from analog inputs
+  
+  for (sample = 0; sample < 10; sample++) {
+    analog_val0 += analogRead(0);
+    delay(2);
+    analog_val1 += analogRead(1);
+    delay(2);
+    analog_val2 += analogRead(2);
+    delay(2);
+    analog_val3 += analogRead(3);
+    delay(2);
+  }
+  
+  // calulate the average of the 10 samples
+  
+    analog_val0 /=10;
+    analog_val1 /=10;
+    analog_val2 /=10;
+    analog_val3 /=10;
+   
     cl.print("<?xml version = \"1.0\" ?>");
     cl.println("<inputs>");
-   // analog_val = analogRead(inputPin0);  // read analog pin A0 UPS voltage
+    analog_val = analogRead(inputPin0);  // read analog pin A0 UPS voltage
     cl.print("<analog>");
     cl.print(analog_val);
     cl.print("</analog>");
-   // analog_val = analogRead(1);  // read analog pin A1 battery current 50 Amp Bi directional
+    analog_val = analogRead(1);  // read analog pin A1 battery current 50 Amp Bi directional
     cl.print("<analog>");
     cl.print(analog_val2);
     cl.print("</analog>");
-  //  analog_val = analogRead(2);  // read analog pin charger current 50 amp Uni directional
+    analog_val = analogRead(2);  // read analog pin charger current 50 amp Uni directional
     cl.print("<analog>");
     cl.print(analog_val3);
     cl.print("</analog>");
    // analog_val = analogRead(3);  // read analog pin A2 inverter current 200 Amp Uni directional
-    cl.print("<analog>");
-    cl.print(analog_val4);
-    cl.print("<analog>");
+   // cl.print("<analog>");
+   // cl.print(analog_val4);
+   // cl.print("<analog>");
     cl.print("</inputs>");
     
    delay(1000);
 
 double Current1 = currentSensor1(analogRead(inputPin1));  // Read  analog value
-  Serial.print("Batt Amps:"); 
-  printDouble(Current1, 2);                               // display Current, number of decimal places
+  Serial.print("\t Batt Amps:"); 
+  printDouble(Current1, 1);                               // display Current, number of decimal places
   Serial.print(" A");
   Serial.print("   ");
-  delay(2000);
+  //delay(500);
  
 double Current2 = currentSensor2(analogRead(inputPin2));  // Read  analog value
-  Serial.print(", Charge Amps:"); 
-  printDouble(Current2, 2);                               // display Current, number of decimal places
+  Serial.print("\t Charge Amps:"); 
+  printDouble(Current2, 1);                               // display Current, number of decimal places
   Serial.print(" A");
   Serial.print("   ");
-  delay(2000);
+  //delay(500);
   
 double Current3 = currentSensor3(analogRead(inputPin3));  // Read  analog value
-  Serial.print(", Inverter Amps:"); 
-  printDouble(Current2, 2);                               // display Current, number of decimal places
+  Serial.print("\t Inverter Amps:"); 
+  printDouble(Current3, 1);                               // display Current, number of decimal places
   Serial.print(" A");
   Serial.println("   ");
-  delay(2000);
+  //delay(500);
 }
 
 // --------------------------------------------------------------------------------------------------------
@@ -271,16 +299,8 @@ double currentSensor1(int RawADC) {
   double SensedVoltage  = (RawADC * InternalVcc) / 1024;
   double Difference     = SensedVoltage - ZeroCurrentVcc;
   double SensedCurrent  = Difference / Sensitivity;
-  Serial.print("Charger ");
+  Serial.print("\t Input A1: ");
   Serial.print(RawADC);
-  /*Serial.print("/1024");                                    // Currently not in use
-  Serial.print(", S V: ");
-  printDouble(SensedVoltage, 1);
-  Serial.print("mV");
-  Serial.print(", 0A at: ");
-  printDouble(ZeroCurrentVcc, 1);
- */
-  Serial.print("mV");
   return SensedCurrent;                                        // Return the Current
        
 }
@@ -295,16 +315,8 @@ double currentSensor2(int RawADC) {
   double SensedVoltage  = (RawADC * InternalVcc) / 1024;
   double Difference     = SensedVoltage - ZeroCurrentVcc;
   double SensedCurrent  = Difference / Sensitivity;
-  Serial.print("Batt Bank ");
+  Serial.print("\t Input A2: ");
   Serial.print(RawADC);
-  /*Serial.print("/1024");                                     // currently not in use
-  Serial.print(", S V: ");
-  printDouble(SensedVoltage, 1);
-  Serial.print("mV");
-  Serial.print(", 0A at: ");
-  printDouble(ZeroCurrentVcc, 1);
-  */
-  Serial.print("mV,");
   return SensedCurrent;                                        // Return the Current
        
 }
@@ -319,16 +331,8 @@ double currentSensor3(int RawADC) {
   double SensedVoltage  = (RawADC * InternalVcc) / 1024;
   double Difference     = SensedVoltage - ZeroCurrentVcc;
   double SensedCurrent  = Difference / Sensitivity;
-  Serial.print("Inverter ");
+  Serial.print("\t Input A3: ");
   Serial.print(RawADC);
-  /*Serial.print("/1024");                                    // currently not in use
-  Serial.print(", S V: ");
-  printDouble(SensedVoltage, 1);
-  rial.print("mV");
-  Serial.print(", 0A at: ");
-  printDouble(ZeroCurrentVcc, 1);
-  */
-  Serial.println("mV,");
   return SensedCurrent;                                        // Return the Current
 */
 }
