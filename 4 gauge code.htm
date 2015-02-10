@@ -14,14 +14,22 @@
 				if (this.readyState == 4) {
 					if (this.status == 200) {
 						if (this.responseXML != null) {
-							data_val1 = this.responseXML.getElementsByTagName('analog')[0].childNodes[0].nodeValue;
-							data_val2 = this.responseXML.getElementsByTagName('analog')[1].childNodes[0].nodeValue;
-							data_val3 = this.responseXML.getElementsByTagName('analog')[2].childNodes[0].nodeValue;
-							data_val4 = this.responseXML.getElementsByTagName('analog')[3].childNodes[0].nodeValue;
-							data_val1 = (data_val1 * 4.77 / 1024.0) / 0.2941;
-							data_val2 = ((data_val2 * 4.77 / 1024.0) - 2.385) / 0.04	
-							data_val3 = (data_val3 * 4.77 / 1024.0) / 0.2941;
-							data_val4 = ((data_val4 * 4.77 / 1024.0) - 0.5724) / 0.02
+							document.getElementById("input0").innerHTML =
+								this.responseXML.getElementsByTagName('analog')[0].childNodes[0].nodeValue;
+							document.getElementById("input1").innerHTML =
+								this.responseXML.getElementsByTagName('analog')[1].childNodes[0].nodeValue;
+							document.getElementById("input2").innerHTML =
+								this.responseXML.getElementsByTagName('analog')[2].childNodes[0].nodeValue;
+							document.getElementById("input3").innerHTML =
+								this.responseXML.getElementsByTagName('analog')[3].childNodes[0].nodeValue;
+									data_val0 = this.responseXML.getElementsByTagName('analog')[0].childNodes[0].nodeValue;
+									data_val0 = (data_val0 / 1024.0) * 4.77 / 0.2941;
+									data_val1 = this.responseXML.getElementsByTagName('analog')[1].childNodes[0].nodeValue;
+									data_val1 = ((data_val1 * 4.77 / 1024.0) - 2.385) / 0.04;
+									data_val2 = this.responseXML.getElementsByTagName('analog')[2].childNodes[0].nodeValue;
+									data_val2 = ((data_val2 * 4.77 / 1024.0) - 1.7567) / 0.06;
+									data_val3 = this.responseXML.getElementsByTagName('analog')[3].childNodes[0].nodeValue;
+									data_val3 = ((data_val3 * 4.77 / 1024.0) - 0.5724) / 0.02;
 						
 						}
 					}
